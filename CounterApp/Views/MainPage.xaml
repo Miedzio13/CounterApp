@@ -1,0 +1,46 @@
+<!-- Views/MainPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:CounterApp.ViewModels"
+             x:Class="CounterApp.Views.MainPage"
+             x:Name="MainPageRoot">
+
+    <ContentPage.BindingContext>
+        <viewModels:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <StackLayout Padding="20" VerticalOptions="Center" HorizontalOptions="Center" Spacing="15">
+
+        <Entry Placeholder="Enter counter name" Text="{Binding NewCounterName}" 
+               HorizontalOptions="Center" WidthRequest="200" />
+
+        
+        <Button Text="Add Counter" Command="{Binding AddCounterCommand}" 
+                HorizontalOptions="Center" />
+
+        
+        <CollectionView ItemsSource="{Binding Counters}" VerticalOptions="Center" 
+                        HorizontalOptions="Center" WidthRequest="300" HeightRequest="400">
+            <CollectionView.ItemsLayout>
+             
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" Margin="10" HorizontalOptions="Center" 
+                                 VerticalOptions="Center" Spacing="10">
+                        <Label Text="{Binding Name}" FontSize="20" WidthRequest="100" 
+                               HorizontalOptions="Center" />
+                        <Button Text="-" Command="{Binding BindingContext.DecrementCommand, Source={x:Reference MainPageRoot}}"
+                                CommandParameter="{Binding .}" />
+                        <Label Text="{Binding Value}" FontSize="20" WidthRequest="50" 
+                               HorizontalTextAlignment="Center" HorizontalOptions="Center" />
+                        <Button Text="+" Command="{Binding BindingContext.IncrementCommand, Source={x:Reference MainPageRoot}}"
+                                CommandParameter="{Binding .}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
